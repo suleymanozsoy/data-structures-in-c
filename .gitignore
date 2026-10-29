@@ -53,3 +53,7 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+*.dSYM/
+*.o
+/stacks/stack_using_one_queue
