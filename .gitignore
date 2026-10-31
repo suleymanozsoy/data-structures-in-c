@@ -57,3 +57,5 @@ dkms.conf
 *.dSYM/
 *.o
 /stacks/stack_using_one_queue
+
+/queues/queue_using_two_stack
