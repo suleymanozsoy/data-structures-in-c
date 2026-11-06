@@ -1,47 +1,58 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-typedef struct TNode {
+typedef struct TNode
+{
+
     int data;
-    struct TNode *childptr;
-    struct TNode *siblingptr;
+    struct TNode *siblingPtr;
+    struct TNode *childPtr;
+
 } TNode;
 
 TNode *create_node(int value)
 {
-    TNode *newNode = malloc(sizeof(*newNode));
+
+    TNode *newNode = malloc(sizeof(TNode));
+
     if (newNode == NULL)
         return NULL;
 
     newNode->data = value;
-    newNode->childptr = NULL;
-    newNode->siblingptr = NULL;
+    newNode->childPtr = NULL;
+    newNode->siblingPtr = NULL;
+
     return newNode;
 }
 
 void add_child(TNode *parent, int value)
 {
+
     if (parent == NULL)
         return;
 
     TNode *valueNode = create_node(value);
+
     if (valueNode == NULL)
         return;
 
-    if (parent->childptr == NULL) {
-        parent->childptr = valueNode;
+    if (parent->childPtr == NULL)
+    {
+        parent->childPtr = valueNode;
         return;
     }
 
-    TNode *current = parent->childptr;
-    while (current->siblingptr != NULL)
-        current = current->siblingptr;
+    TNode *current = parent->childPtr;
 
-    current->siblingptr = valueNode;
+    while (current->siblingPtr != NULL)
+        current = current->siblingPtr;
+
+    current->siblingPtr = valueNode;
 }
 
-void print_tree(const TNode *node, int depth)
+void print_tree(TNode *node, int depth)
 {
+
     if (node == NULL)
         return;
 
@@ -49,8 +60,10 @@ void print_tree(const TNode *node, int depth)
         printf("  ");
 
     printf("%d\n", node->data);
-    print_tree(node->childptr, depth + 1);
-    print_tree(node->siblingptr, depth);
+
+    print_tree(node->childPtr, depth + 1);
+
+    print_tree(node->siblingPtr, depth);
 }
 
 void free_tree(TNode *node)
@@ -58,25 +71,32 @@ void free_tree(TNode *node)
     if (node == NULL)
         return;
 
-    free_tree(node->childptr);
-    free_tree(node->siblingptr);
+    free_tree(node->childPtr);
+
+    free_tree(node->siblingPtr);
+
     free(node);
 }
 
-int main(void)
+int main()
 {
+
     TNode *root = create_node(10);
+
     if (root == NULL)
         return 1;
 
     add_child(root, 20);
     add_child(root, 30);
     add_child(root, 40);
-    add_child(root->childptr, 50);
-    add_child(root->childptr, 60);
-    add_child(root->childptr->siblingptr->siblingptr, 70);
+
+    add_child(root->childPtr, 50);
+    add_child(root->childPtr, 60);
+    add_child(root->childPtr->siblingPtr->siblingPtr, 70);
 
     print_tree(root, 0);
+
     free_tree(root);
+
     return 0;
 }
